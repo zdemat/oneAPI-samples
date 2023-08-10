@@ -1,7 +1,7 @@
 #ifndef __ONCHIP_MEMORY_WITH_CACHE_HPP__
 #define __ONCHIP_MEMORY_WITH_CACHE_HPP__
 
-#include <sycl/ext/intel/ac_types/ac_int.hpp>
+#include <CL/sycl/INTEL/ac_types/ac_int.hpp>
 
 #include "constexpr_math.hpp"  // DirectProgramming/C++SYCL_FPGA/include
 #include "unrolled_loop.hpp"   // DirectProgramming/C++SYCL_FPGA/include

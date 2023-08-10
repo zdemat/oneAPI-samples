@@ -1,4 +1,4 @@
-#include <sycl/sycl.hpp>
+#include <CL/sycl.hpp>
 #include <algorithm>
 #include <array>
 #include <fstream>
@@ -7,7 +7,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
-#include <sycl/ext/intel/fpga_extensions.hpp>
+#include <CL/sycl/INTEL/fpga_extensions.hpp>
 #include <thread>
 #include <type_traits>
 #include <utility>
@@ -125,11 +125,11 @@ int main(int argc, char* argv[]) {
   std::cout << std::endl;
 
 #if FPGA_SIMULATOR
-    auto selector = sycl::ext::intel::fpga_simulator_selector_v;
+    sycl::INTEL::fpga_simulator_selector selector;
 #elif FPGA_HARDWARE
-    auto selector = sycl::ext::intel::fpga_selector_v;
+    sycl::INTEL::fpga_selector selector;
 #else  // #if FPGA_EMULATOR
-    auto selector = sycl::ext::intel::fpga_emulator_selector_v;
+    sycl::INTEL::fpga_emulator_selector selector;
 #endif
 
   // create the device queue

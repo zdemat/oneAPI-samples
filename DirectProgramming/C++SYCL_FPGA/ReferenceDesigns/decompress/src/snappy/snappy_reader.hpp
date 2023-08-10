@@ -1,9 +1,9 @@
 #ifndef __SNAPPY_READER_HPP__
 #define __SNAPPY_READER_HPP__
 
-#include <sycl/sycl.hpp>
-#include <sycl/ext/intel/ac_types/ac_int.hpp>
-#include <sycl/ext/intel/fpga_extensions.hpp>
+#include <CL/sycl.hpp>
+#include <CL/sycl/INTEL/ac_types/ac_int.hpp>
+#include <CL/sycl/INTEL/fpga_extensions.hpp>
 
 #include "byte_stream.hpp"
 #include "constexpr_math.hpp"         // included from ../../../../include
@@ -76,7 +76,7 @@ unsigned SnappyReader(unsigned in_count) {
   // therefore is not a performance critical loop. However, the compiler doesn't
   // know that and tries to optimize for throughput (~Fmax/II). We don't want
   // this loop to be our Fmax bottleneck, so increase the II.
-  [[intel::initiation_interval(3)]]  // NO-FORMAT: Attribute
+  [[intel::ii(3)]]  // NO-FORMAT: Attribute
   while (reading_preamble) {
     if (byte_stream.Space() >= literals_per_cycle) {
       bool valid_read;

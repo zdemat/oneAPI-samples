@@ -1,11 +1,11 @@
 #ifndef __SNAPPY_DECOMPRESSOR_HPP__
 #define __SNAPPY_DECOMPRESSOR_HPP__
 
-#include <sycl/sycl.hpp>
+#include <CL/sycl.hpp>
 #include <chrono>
 #include <optional>
-#include <sycl/ext/intel/ac_types/ac_int.hpp>
-#include <sycl/ext/intel/fpga_extensions.hpp>
+#include <CL/sycl/INTEL/ac_types/ac_int.hpp>
+#include <CL/sycl/INTEL/fpga_extensions.hpp>
 
 #include "../common/byte_stacker.hpp"
 #include "../common/common.hpp"
@@ -55,7 +55,7 @@ std::vector<sycl::event> SubmitSnappyDecompressKernels(
 
   // the inter-kernel pipes for the snappy decompression engine
   constexpr int SnappyReaderToLZ77PipeDepth = 16;
-  using SnappyReaderToLZ77Pipe = sycl::ext::intel::pipe<
+  using SnappyReaderToLZ77Pipe = sycl::INTEL::pipe<
       SnappyReaderToLZ77PipeID,
       FlagBundle<SnappyLZ77InputData<literals_per_cycle>>,
       SnappyReaderToLZ77PipeDepth>;
@@ -67,8 +67,8 @@ std::vector<sycl::event> SubmitSnappyDecompressKernels(
   // the design only needs a ByteStacker kernel when literals_per_cycle > 1
   if constexpr (literals_per_cycle > 1) {
     using LZ77ToByteStackerPipe =
-        sycl::ext::intel::pipe<LZ77ToByteStackerPipeID,
-                               FlagBundle<BytePack<literals_per_cycle>>>;
+        sycl::INTEL::pipe<LZ77ToByteStackerPipeID,
+                          FlagBundle<BytePack<literals_per_cycle>>>;
 
     auto lz77_event =
         SubmitLZ77Decoder<LZ77DecoderKernelID, SnappyReaderToLZ77Pipe,
@@ -95,9 +95,9 @@ class InPipeId;
 class OutPipeId;
 
 // the input and output pipe
-using InPipe = sycl::ext::intel::pipe<InPipeId, ByteSet<kLiteralsPerCycle>>;
+using InPipe = sycl::INTEL::pipe<InPipeId, ByteSet<kLiteralsPerCycle>>;
 using OutPipe =
-    sycl::ext::intel::pipe<OutPipeId, FlagBundle<BytePack<kLiteralsPerCycle>>>;
+    sycl::INTEL::pipe<OutPipeId, FlagBundle<BytePack<kLiteralsPerCycle>>>;
 
 //
 // The SNAPPY decompressor. See ../common/common.hpp for more information.
