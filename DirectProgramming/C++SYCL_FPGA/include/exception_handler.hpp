@@ -1,6 +1,6 @@
 #ifndef __EXCEPTIONHANDLER_HPP__
 #define __EXCEPTIONHANDLER_HPP__
-#include <sycl/sycl.hpp>
+#include <CL/sycl.hpp>
 #include <exception>
 #include <iostream>
 
